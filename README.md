@@ -98,3 +98,126 @@ Duration >= 45 minutes
 Duration < 45 minutes
         ↓
       ABSENT
+
+🛠️ Technology Stack
+Frontend -
+React.js
+JavaScript
+CSS
+Axios
+Vite
+
+Backend -
+Java
+Spring Boot
+Spring REST
+Spring Data JPA
+Hibernate
+Maven
+
+Database -
+MySQL
+
+AI / Computer Vision -
+Python
+OpenCV
+Haar Cascade
+Face Recognition
+
+Development Environment -
+Windows
+Visual Studio Code / IntelliJ IDEA
+MySQL
+Git
+GitHub
+
+📂 Project Structure
+
+multimodal-smart-attendance-system/
+│
+├── ai/
+│   ├── capture_faces.py
+│   ├── face_detection.py
+│   ├── final_attendance.py
+│   ├── process_entry_video.py
+│   ├── process_exit_video.py
+│   ├── recognize_faces.py
+│   ├── train_faces.py
+│   ├── duration_validation.py
+│   └── haarcascade_frontalface_default.xml
+│
+├── backend/
+│   ├── src/
+│   ├── pom.xml
+│   └── mvnw.cmd
+│
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   └── vite.config.js
+│
+└── .gitignore
+
+
+▶️ How to Run the Project
+1. Start MySQL
+
+Make sure MySQL is running and the project database is configured in the Spring Boot application.
+
+2. Start Spring Boot Backend
+
+Open CMD:
+
+cd C:\Users\Sirisha\Desktop\multimodal-smart-attendance-system\backend
+mvnw.cmd spring-boot:run
+
+Backend runs on:
+
+http://localhost:8081
+3. Start React Frontend
+
+Open another CMD:
+
+cd C:\Users\Sirisha\Desktop\multimodal-smart-attendance-system\frontend
+npm install
+npm run dev
+
+The frontend will normally run on:
+
+http://localhost:5173
+4. Start Python AI Environment
+
+Open CMD:
+
+cd C:\Users\Sirisha\Desktop\multimodal-smart-attendance-system\ai
+venv\Scripts\activate
+5. Process Entry Video
+python process_entry_video.py "entry_video_2.mp4"
+6. Process Exit Video
+python process_exit_video.py "exit_video.mp4"
+7. Run Duration Validation
+python duration_validation.py
+📊 Attendance Logic
+
+The system compares all registered students with the students detected in the videos.
+
+Case 1: Student not detected in either video
+Entry = NO
+Exit  = NO
+
+Result = ABSENT
+Case 2: Student detected at entry but not at exit
+Entry = YES
+Exit  = NO
+
+Apply duration validation
+Case 3: Student detected at both entry and exit
+Entry = YES
+Exit  = YES
+
+Calculate duration
+Final validation
+Duration >= 45 minutes → PRESENT
+
+Duration < 45 minutes → ABSENT
