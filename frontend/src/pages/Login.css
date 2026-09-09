@@ -1,0 +1,423 @@
+/* =========================================
+   SMART ATTENDANCE SYSTEM - LOGIN PAGE
+========================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI",sans-serif;
+}
+
+html,
+body,
+#root{
+    width:100%;
+    height:100%;
+}
+
+body{
+    background:#f4f7fb;
+}
+
+/* =========================================
+   LOGIN CONTAINER
+========================================= */
+
+.login-container{
+    width:100%;
+    min-height:100vh;
+    display:flex;
+}
+
+/* =========================================
+   LEFT PANEL
+========================================= */
+
+.login-left{
+
+    flex:1;
+
+    background:linear-gradient(135deg,#0f172a,#2563eb);
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:50px;
+
+    color:white;
+
+}
+
+.logo{
+
+    width:90px;
+
+    margin-bottom:20px;
+
+}
+
+.login-left h1{
+
+    font-size:42px;
+
+    margin-bottom:15px;
+
+    text-align:center;
+
+}
+
+.login-left p{
+
+    font-size:18px;
+
+    color:#dbeafe;
+
+    text-align:center;
+
+    line-height:1.6;
+
+    max-width:420px;
+
+}
+
+.faculty-image{
+
+    width:360px;
+
+    margin-top:35px;
+
+    max-width:100%;
+
+}
+
+/* =========================================
+   RIGHT PANEL
+========================================= */
+
+.login-right{
+
+    flex:1;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#ffffff;
+
+    padding:40px;
+
+}
+
+/* =========================================
+   LOGIN CARD
+========================================= */
+
+.login-card{
+
+    width:100%;
+
+    max-width:430px;
+
+    background:white;
+
+    padding:40px;
+
+    border-radius:20px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.15);
+
+}
+
+.login-card h2{
+
+    text-align:center;
+
+    color:#1e3a8a;
+
+    font-size:32px;
+
+    margin-bottom:8px;
+
+}
+
+.subtitle{
+
+    text-align:center;
+
+    color:#64748b;
+
+    margin-bottom:30px;
+
+}
+
+/* =========================================
+   INPUT BOX
+========================================= */
+
+.input-box{
+
+    display:flex;
+
+    align-items:center;
+
+    border:1px solid #d1d5db;
+
+    border-radius:12px;
+
+    padding:14px;
+
+    margin-bottom:20px;
+
+    transition:.3s;
+
+}
+
+.input-box:focus-within{
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 6px rgba(37,99,235,.25);
+
+}
+
+.input-icon{
+
+    color:#2563eb;
+
+    margin-right:12px;
+
+    font-size:18px;
+
+}
+
+.input-box input{
+
+    width:100%;
+
+    border:none;
+
+    outline:none;
+
+    font-size:16px;
+
+}
+
+/* =========================================
+   CAMERA BOX
+========================================= */
+
+.camera-box{
+
+    margin-top:10px;
+
+    background:#f8fafc;
+
+    border:2px dashed #cbd5e1;
+
+    border-radius:15px;
+
+    text-align:center;
+
+    padding:20px;
+
+}
+
+.camera-icon{
+
+    font-size:45px;
+
+    color:#2563eb;
+
+    margin-bottom:12px;
+
+}
+
+.camera-box h3{
+
+    margin-bottom:10px;
+
+    color:#1e293b;
+
+}
+
+.camera-box p{
+
+    color:#64748b;
+
+    line-height:1.5;
+
+    margin-bottom:20px;
+
+}
+
+.camera-btn{
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 24px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.camera-btn:hover{
+
+    background:#1d4ed8;
+
+}
+
+/* =========================================
+   LOGIN BUTTON
+========================================= */
+
+.login-btn{
+
+    width:100%;
+
+    margin-top:25px;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.login-btn:hover{
+
+    background:#1d4ed8;
+
+}
+
+/* =========================================
+   DEMO BOX
+========================================= */
+
+.demo-box{
+
+    margin-top:25px;
+
+    padding:18px;
+
+    background:#eff6ff;
+
+    border-left:5px solid #2563eb;
+
+    border-radius:10px;
+
+}
+
+.demo-box h4{
+
+    color:#1e3a8a;
+
+    margin-bottom:10px;
+
+}
+
+.demo-box p{
+
+    margin-bottom:5px;
+
+    color:#334155;
+
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:900px){
+
+.login-container{
+
+    flex-direction:column;
+
+}
+
+.login-left{
+
+    padding:35px;
+
+}
+
+.login-right{
+
+    padding:25px;
+
+}
+
+.login-left h1{
+
+    font-size:30px;
+
+}
+
+.faculty-image{
+
+    width:240px;
+
+}
+
+.login-card{
+
+    max-width:100%;
+
+}
+
+}
+
+@media(max-width:600px){
+
+.login-card{
+
+    padding:25px;
+
+}
+
+.logo{
+
+    width:70px;
+
+}
+
+.login-left h1{
+
+    font-size:26px;
+
+}
+
+.login-left p{
+
+    font-size:15px;
+
+}
+
+}

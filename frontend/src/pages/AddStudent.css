@@ -1,0 +1,204 @@
+/* =====================================
+   ADD STUDENT PAGE
+===================================== */
+
+.dashboard{
+    display:flex;
+    min-height:100vh;
+    background:#f4f7fb;
+}
+
+.dashboard-content{
+    flex:1;
+    margin-left:260px;
+    padding:30px;
+}
+
+/* =====================================
+   PAGE TITLE
+===================================== */
+
+.page-title{
+
+    font-size:35px;
+
+    color:#0f172a;
+
+    margin-bottom:30px;
+
+}
+
+/* =====================================
+   CARD
+===================================== */
+
+.student-card{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+/* =====================================
+   FORM GRID
+===================================== */
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(300px,1fr));
+
+    gap:25px;
+
+}
+
+/* =====================================
+   FORM GROUP
+===================================== */
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.form-group label{
+
+    font-size:16px;
+
+    font-weight:600;
+
+    color:#334155;
+
+    margin-bottom:10px;
+
+}
+
+.form-group input,
+.form-group select{
+
+    padding:14px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+    transition:.3s;
+
+}
+
+.form-group input:focus,
+.form-group select:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 5px rgba(37,99,235,.3);
+
+}
+
+/* =====================================
+   FILE INPUT
+===================================== */
+
+input[type=file]{
+
+    padding:10px;
+
+}
+
+/* =====================================
+   SAVE BUTTON
+===================================== */
+
+.save-btn{
+
+    margin-top:35px;
+
+    background:#2563eb;
+
+    color:white;
+
+    padding:15px 35px;
+
+    border:none;
+
+    border-radius:10px;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.save-btn:hover{
+
+    background:#1d4ed8;
+
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media(max-width:900px){
+
+.dashboard{
+
+    flex-direction:column;
+
+}
+
+.dashboard-content{
+
+    margin-left:0;
+
+}
+
+}
+
+@media(max-width:600px){
+
+.dashboard-content{
+
+    padding:20px;
+
+}
+
+.page-title{
+
+    font-size:28px;
+
+}
+
+.student-card{
+
+    padding:20px;
+
+}
+
+.form-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+.save-btn{
+
+    width:100%;
+
+}
+
+}

@@ -1,0 +1,250 @@
+/* =====================================
+   DAILY RECORDS PAGE
+===================================== */
+
+.dashboard{
+    display:flex;
+    min-height:100vh;
+    background:#f4f7fb;
+}
+
+.dashboard-content{
+    flex:1;
+    margin-left:260px;
+    padding:30px;
+}
+
+/* =====================================
+   PAGE TITLE
+===================================== */
+
+.page-title{
+    font-size:35px;
+    color:#0f172a;
+    margin-bottom:30px;
+}
+
+/* =====================================
+   SEARCH CARD
+===================================== */
+
+.search-card{
+
+    display:flex;
+
+    gap:20px;
+
+    align-items:center;
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+    margin-bottom:30px;
+
+}
+
+.search-card input{
+
+    padding:14px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+}
+
+.search-btn{
+
+    background:#2563eb;
+
+    color:white;
+
+    padding:14px 25px;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.search-btn:hover{
+
+    background:#1d4ed8;
+
+}
+
+/* =====================================
+   TABLE CARD
+===================================== */
+
+.table-card{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+    overflow-x:auto;
+
+}
+
+/* =====================================
+   TABLE
+===================================== */
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+thead{
+
+    background:#2563eb;
+
+}
+
+th{
+
+    color:white;
+
+    padding:16px;
+
+    text-align:left;
+
+}
+
+td{
+
+    padding:16px;
+
+    border-bottom:1px solid #e5e7eb;
+
+}
+
+tr:hover{
+
+    background:#f8fafc;
+
+}
+
+/* =====================================
+   STATUS
+===================================== */
+
+.present{
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+    padding:8px 15px;
+
+    border-radius:20px;
+
+    font-weight:600;
+
+}
+
+.absent{
+
+    background:#fee2e2;
+
+    color:#dc2626;
+
+    padding:8px 15px;
+
+    border-radius:20px;
+
+    font-weight:600;
+
+}
+
+/* =====================================
+   EMPTY ROW
+===================================== */
+
+.empty-row{
+
+    text-align:center;
+
+    padding:30px;
+
+    color:#64748b;
+
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media(max-width:900px){
+
+.dashboard{
+
+    flex-direction:column;
+
+}
+
+.dashboard-content{
+
+    margin-left:0;
+
+}
+
+}
+
+@media(max-width:600px){
+
+.dashboard-content{
+
+    padding:20px;
+
+}
+
+.page-title{
+
+    font-size:28px;
+
+}
+
+.search-card{
+
+    flex-direction:column;
+
+    align-items:stretch;
+
+}
+
+.search-btn{
+
+    width:100%;
+
+}
+
+th,
+td{
+
+    padding:12px;
+
+    font-size:14px;
+
+}
+
+}

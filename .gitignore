@@ -1,0 +1,53 @@
+# =========================
+# React
+# =========================
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.env
+
+# =========================
+# Spring Boot
+# =========================
+backend/target/
+backend/.idea/
+backend/uploads/
+
+# =========================
+# Python
+# =========================
+ai/venv/
+ai/__pycache__/
+ai/*.pyc
+
+# =========================
+# AI Training Data
+# =========================
+ai/dataset/
+ai/trainer/
+
+# =========================
+# Large Video Files
+# =========================
+ai/*.mp4
+ai/*.avi
+ai/*.mov
+
+# =========================
+# Environment / Secrets
+# =========================
+.env
+*.env
+application-local.properties
+
+# =========================
+# IDE
+# =========================
+.idea/
+.vscode/
+
+# =========================
+# OS
+# =========================
+Thumbs.db
+.DS_Store

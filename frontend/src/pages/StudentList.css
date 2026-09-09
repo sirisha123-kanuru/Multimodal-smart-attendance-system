@@ -1,0 +1,250 @@
+/* =====================================
+   STUDENT LIST PAGE
+===================================== */
+
+.dashboard{
+    display:flex;
+    min-height:100vh;
+    background:#f4f7fb;
+}
+
+.dashboard-content{
+    flex:1;
+    margin-left:260px;
+    padding:30px;
+}
+
+/* =====================================
+   PAGE TITLE
+===================================== */
+
+.page-title{
+    font-size:35px;
+    color:#0f172a;
+    margin-bottom:25px;
+}
+
+/* =====================================
+   SEARCH BOX
+===================================== */
+
+.search-box{
+    width:100%;
+    max-width:450px;
+    display:flex;
+    align-items:center;
+    background:white;
+    border-radius:12px;
+    padding:12px 18px;
+    margin-bottom:25px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.search-icon{
+    color:#2563eb;
+    font-size:18px;
+    margin-right:12px;
+}
+
+.search-box input{
+    width:100%;
+    border:none;
+    outline:none;
+    font-size:16px;
+}
+
+/* =====================================
+   TABLE CARD
+===================================== */
+
+.table-card{
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+    overflow-x:auto;
+}
+
+/* =====================================
+   TABLE
+===================================== */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead{
+    background:#2563eb;
+}
+
+th{
+    color:white;
+    padding:16px;
+    text-align:left;
+    font-size:16px;
+}
+
+td{
+    padding:16px;
+    border-bottom:1px solid #e5e7eb;
+    color:#334155;
+}
+
+tr:hover{
+    background:#f8fafc;
+}
+
+/* =====================================
+   PHOTO
+===================================== */
+
+.student-photo{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid #2563eb;
+}
+
+/* =====================================
+   ACTION BUTTONS
+===================================== */
+
+.edit-btn{
+
+    background:#16a34a;
+
+    color:white;
+
+    border:none;
+
+    width:40px;
+
+    height:40px;
+
+    border-radius:8px;
+
+    margin-right:10px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.edit-btn:hover{
+
+    background:#15803d;
+
+}
+
+.delete-btn{
+
+    background:#dc2626;
+
+    color:white;
+
+    border:none;
+
+    width:40px;
+
+    height:40px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.delete-btn:hover{
+
+    background:#b91c1c;
+
+}
+
+/* =====================================
+   EMPTY ROW
+===================================== */
+
+.empty-row{
+
+    text-align:center;
+
+    color:#64748b;
+
+    padding:35px;
+
+    font-size:18px;
+
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media(max-width:900px){
+
+.dashboard{
+
+    flex-direction:column;
+
+}
+
+.dashboard-content{
+
+    margin-left:0;
+
+}
+
+}
+
+@media(max-width:600px){
+
+.dashboard-content{
+
+    padding:20px;
+
+}
+
+.page-title{
+
+    font-size:28px;
+
+}
+
+.search-box{
+
+    max-width:100%;
+
+}
+
+.student-photo{
+
+    width:45px;
+
+    height:45px;
+
+}
+
+th,
+td{
+
+    padding:12px;
+
+    font-size:14px;
+
+}
+
+.edit-btn,
+.delete-btn{
+
+    width:35px;
+
+    height:35px;
+
+}
+
+}

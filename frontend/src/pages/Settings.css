@@ -1,0 +1,103 @@
+.dashboard{
+    display:flex;
+    min-height:100vh;
+    background:#f4f7fb;
+}
+
+.dashboard-content{
+    flex:1;
+    margin-left:260px;
+    padding:30px;
+}
+
+.page-title{
+    font-size:35px;
+    color:#0f172a;
+    margin-bottom:30px;
+}
+
+.settings-card{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    max-width:700px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+    margin-bottom:20px;
+}
+
+.form-group label{
+    margin-bottom:8px;
+    font-weight:600;
+    color:#334155;
+}
+
+.form-group input{
+    padding:14px;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    font-size:16px;
+}
+
+.form-group input:focus{
+    border-color:#2563eb;
+    outline:none;
+}
+
+.checkbox-group{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:25px;
+}
+
+.save-btn{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:15px 30px;
+    border-radius:10px;
+    font-size:16px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.save-btn:hover{
+    background:#1d4ed8;
+}
+
+@media(max-width:900px){
+
+.dashboard{
+    flex-direction:column;
+}
+
+.dashboard-content{
+    margin-left:0;
+}
+
+}
+
+@media(max-width:600px){
+
+.dashboard-content{
+    padding:20px;
+}
+
+.page-title{
+    font-size:28px;
+}
+
+.settings-card{
+    padding:20px;
+}
+
+.save-btn{
+    width:100%;
+}
+
+}
