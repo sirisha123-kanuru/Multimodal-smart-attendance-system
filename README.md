@@ -224,4 +224,17 @@ Duration >= 45 minutes → PRESENT
 
 Duration < 45 minutes → ABSENT
 
-
+✅ Advantages
+Reduces manual attendance work.
+Uses facial recognition for automated identification.
+Considers both entry and exit information.
+Uses attendance duration for validation.
+Stores records in a centralized database.
+Provides a web-based dashboard.
+Can identify students absent from both videos.
+Modular architecture with separate frontend, backend, database, and AI components.
+⚠️ Limitations
+Current implementation uses uploaded videos rather than a live camera.
+Face recognition performance can depend on lighting, camera angle, and video quality.
+The current demonstration uses short videos.
+Duration validation in the demonstration may use simulated/demo duration values rather than 45 minutes of real-time video.
