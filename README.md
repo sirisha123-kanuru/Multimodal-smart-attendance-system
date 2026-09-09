@@ -38,67 +38,6 @@ Unlike a basic face-detection attendance system, this project considers multiple
 
 ---
 
-## ✨ Features
-
-### Student Registration
-
-- Student name and roll number registration.
-- Student photo upload.
-- Automatic unique face label assignment.
-- Student information stored in MySQL.
-
-### Face Recognition
-
-- OpenCV-based face detection.
-- Haar Cascade for face detection.
-- Face recognition model for identifying registered students.
-- Recognition based on assigned face labels.
-
-### Entry Video Processing
-
-- Processes an uploaded entry video.
-- Detects registered students.
-- Records video-relative entry timestamps.
-- Updates attendance records.
-
-### Exit Video Processing
-
-- Processes an uploaded exit video.
-- Detects students leaving the classroom.
-- Records video-relative exit timestamps.
-- Updates existing attendance records.
-
-### Duration Validation
-
-The system checks the duration between entry and exit.
-
-Minimum required duration:
-
-**45 minutes**
-
-Attendance rule:
-
-```text
-Entry NO + Exit NO
-        ↓
-      ABSENT
-
-Entry YES + Exit NO
-        ↓
- Apply duration rule
-
-Entry YES + Exit YES
-        ↓
- Calculate duration
-
-Duration >= 45 minutes
-        ↓
-      PRESENT
-
-Duration < 45 minutes
-        ↓
-      ABSENT
-
 🛠️ Technology Stack
 Frontend -
 React.js
@@ -221,3 +160,66 @@ Final validation
 Duration >= 45 minutes → PRESENT
 
 Duration < 45 minutes → ABSENT
+
+
+## ✨ Features
+
+### Student Registration
+
+- Student name and roll number registration.
+- Student photo upload.
+- Automatic unique face label assignment.
+- Student information stored in MySQL.
+
+### Face Recognition
+
+- OpenCV-based face detection.
+- Haar Cascade for face detection.
+- Face recognition model for identifying registered students.
+- Recognition based on assigned face labels.
+
+### Entry Video Processing
+
+- Processes an uploaded entry video.
+- Detects registered students.
+- Records video-relative entry timestamps.
+- Updates attendance records.
+
+### Exit Video Processing
+
+- Processes an uploaded exit video.
+- Detects students leaving the classroom.
+- Records video-relative exit timestamps.
+- Updates existing attendance records.
+
+### Duration Validation
+
+The system checks the duration between entry and exit.
+
+Minimum required duration:
+
+**45 minutes**
+
+Attendance rule:
+
+```text
+Entry NO + Exit NO
+        ↓
+      ABSENT
+
+Entry YES + Exit NO
+        ↓
+ Apply duration rule
+
+Entry YES + Exit YES
+        ↓
+ Calculate duration
+
+Duration >= 45 minutes
+        ↓
+      PRESENT
+
+Duration < 45 minutes
+        ↓
+      ABSENT
+
