@@ -7,7 +7,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/faculty")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = {
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "https://multimodal-smart-attendance-system.vercel.app"
+})
 public class FacultyController {
 
     @Autowired

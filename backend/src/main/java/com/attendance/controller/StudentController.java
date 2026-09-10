@@ -29,7 +29,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RequestMapping("/students")
 @CrossOrigin(origins = {
         "http://localhost:5173",
-        http://localhost:5174,`r`n https://multimodal-smart-attendance-system.vercel.app"
+        "http://localhost:5174",
+        "https://multimodal-smart-attendance-system.vercel.app"
 })
 public class StudentController {
 
