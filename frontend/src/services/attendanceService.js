@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8081/attendance";
+const API_URL = "https://multimodal-smart-attendance-system-production.up.railway.app/attendance";
 
 export const getAttendance = () => axios.get(API_URL);
 

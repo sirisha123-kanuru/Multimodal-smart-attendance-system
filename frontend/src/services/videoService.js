@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const VIDEO_API_URL = "http://localhost:8081/api/videos";
+const VIDEO_API_URL = "https://multimodal-smart-attendance-system-production.up.railway.app/api/videos";
 
 export const uploadVideos = async (entryVideo, exitVideo) => {
   const formData = new FormData();
