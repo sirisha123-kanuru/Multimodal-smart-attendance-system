@@ -14,10 +14,10 @@ sys.stdout.reconfigure(encoding="utf-8")
 # CONFIGURATION
 # ============================================================
 
-ATTENDANCE_API_URL = "http://localhost:8081/attendance"
+ATTENDANCE_API_URL = "https://multimodal-smart-attendance-system-production.up.railway.app/attendance"
 
 # Spring Boot Student API
-STUDENTS_API_URL = "http://localhost:8081/students"
+STUDENTS_API_URL = "https://multimodal-smart-attendance-system-production.up.railway.app/students"
 
 REQUIRED_DURATION = 45
 

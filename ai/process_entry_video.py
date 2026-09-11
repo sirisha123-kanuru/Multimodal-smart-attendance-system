@@ -25,8 +25,8 @@ TRAINER_PATH = os.path.join(
     "trainer.yml"
 )
 
-STUDENT_API_URL = "http://localhost:8081/students"
-ATTENDANCE_API_URL = "http://localhost:8081/attendance"
+STUDENT_API_URL = "https://multimodal-smart-attendance-system-production.up.railway.app/students"
+ATTENDANCE_API_URL = "https://multimodal-smart-attendance-system-production.up.railway.app/attendance"
 
 RECOGNITION_THRESHOLD = 85
 FRAME_SKIP = 2
@@ -545,21 +545,13 @@ while True:
         2
     )
 
-    cv2.imshow(
-        "Entry Video - Face Verification",
-        frame
-    )
-
-    if cv2.waitKey(1) & 0xFF == ord("q"):
-        break
-
+    
 
 # ============================================================
 # CLEANUP
 # ============================================================
 
 video.release()
-cv2.destroyAllWindows()
 
 
 # ============================================================
