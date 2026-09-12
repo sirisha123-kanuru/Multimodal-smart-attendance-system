@@ -1,12 +1,17 @@
 import cv2
 import os
 import sys
+import ssl
+import certifi
 import json
 from collections import defaultdict, Counter
 from urllib.request import urlopen, Request
+from urllib.error import URLError, HTTPError
 from datetime import datetime
 
-
+SSL_CONTEXT = ssl.create_default_context(
+    cafile=certifi.where()
+)
 # ============================================================
 # CONFIGURATION
 # ============================================================
@@ -86,7 +91,8 @@ try:
 
     with urlopen(
         STUDENT_API_URL,
-        timeout=5
+        timeout=5,
+            context=SSL_CONTEXT
     ) as response:
 
         students = json.loads(
@@ -235,7 +241,8 @@ def get_today_attendance(student_id):
 
         with urlopen(
             url,
-            timeout=5
+            timeout=5,
+            context=SSL_CONTEXT
         ) as response:
 
             records = json.loads(
@@ -331,7 +338,8 @@ def update_exit_time(
 
         with urlopen(
             request,
-            timeout=5
+            timeout=5,
+            context=SSL_CONTEXT
         ) as response:
 
             return json.loads(

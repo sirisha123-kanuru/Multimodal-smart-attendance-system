@@ -14,12 +14,38 @@ sys.stdout.reconfigure(encoding="utf-8")
 # CONFIGURATION
 # ============================================================
 
-ATTENDANCE_API_URL = "https://multimodal-smart-attendance-system-production.up.railway.app/attendance"
+ATTENDANCE_API_URL = (
+    "https://multimodal-smart-attendance-system-production.up.railway.app/attendance"
+)
 
-# Spring Boot Student API
-STUDENTS_API_URL = "https://multimodal-smart-attendance-system-production.up.railway.app/students"
+STUDENTS_API_URL = (
+    "https://multimodal-smart-attendance-system-production.up.railway.app/students"
+)
 
-REQUIRED_DURATION = 45
+# ============================================================
+# DEMO ATTENDANCE LOGIC
+# ============================================================
+#
+# This project uses DEMO MODE because the uploaded videos
+# are only a few minutes long.
+#
+# DEMO RULE:
+#
+# Entry YES + Exit NO  -> PRESENT
+# Entry YES + Exit YES -> ABSENT
+# Entry NO             -> ABSENT
+#
+# Therefore:
+#
+# Student enters and is NOT seen in exit video:
+# They are considered STILL INSIDE -> PRESENT
+#
+# No actual 45-minute calculation is performed.
+#
+# ============================================================
+
+
+API_TIMEOUT = 15
 
 
 # ============================================================
@@ -28,7 +54,7 @@ REQUIRED_DURATION = 45
 
 print()
 print("========================================")
-print("PHASE 11 - DURATION VALIDATION")
+print("PHASE 11 - DEMO ATTENDANCE VALIDATION")
 print("========================================")
 print()
 
@@ -43,7 +69,7 @@ try:
 
     student_response = requests.get(
         STUDENTS_API_URL,
-        timeout=5
+        timeout=API_TIMEOUT
     )
 
     student_response.raise_for_status()
@@ -54,15 +80,14 @@ except Exception as e:
 
     print()
     print("ERROR: Cannot load students from Spring Boot.")
-    print("Make sure Spring Boot is running on port 8081.")
     print("Details:", e)
 
     sys.exit(1)
 
 
-# ------------------------------------------------------------
+# ============================================================
 # HANDLE POSSIBLE WRAPPED RESPONSE
-# ------------------------------------------------------------
+# ============================================================
 
 if isinstance(students_data, dict):
 
@@ -102,7 +127,7 @@ try:
 
     attendance_response = requests.get(
         ATTENDANCE_API_URL,
-        timeout=5
+        timeout=API_TIMEOUT
     )
 
     attendance_response.raise_for_status()
@@ -113,7 +138,6 @@ except Exception as e:
 
     print()
     print("ERROR: Cannot connect to attendance API.")
-    print("Make sure Spring Boot is running on port 8081.")
     print("Details:", e)
 
     sys.exit(1)
@@ -151,32 +175,25 @@ print()
 # DETERMINE PROCESSING DATE
 # ============================================================
 
-# Prefer today's date.
 today = datetime.now().strftime("%Y-%m-%d")
 
 
-# Check whether today's records exist.
+print(
+    "Processing attendance date:",
+    today
+)
+
+
+# ============================================================
+# TODAY'S RECORDS
+# ============================================================
+
 today_records = [
     record
     for record in records
     if record.get("date") == today
 ]
 
-
-# ------------------------------------------------------------
-# IF TODAY HAS NO RECORDS
-# ------------------------------------------------------------
-
-# This is not necessarily an error anymore.
-#
-# A newly registered student may have no attendance record.
-#
-# We still need to mark that student ABSENT.
-
-print(
-    "Processing attendance date:",
-    today
-)
 
 print(
     "Attendance records for today:",
@@ -187,7 +204,7 @@ print()
 
 
 # ============================================================
-# STUDENT NAME HELPER
+# STUDENT HELPERS
 # ============================================================
 
 def get_student_id(student):
@@ -213,32 +230,6 @@ def get_student_name(student):
 
 
 # ============================================================
-# DEMO DURATION
-# ============================================================
-
-# IMPORTANT:
-#
-# Your uploaded videos are only 3:17.
-#
-# Therefore actual 45-minute classroom duration cannot
-# currently be measured from these short videos.
-#
-# We keep DEMO MODE for the moment.
-#
-# IMPORTANT:
-# Unknown/new students are NOT included here.
-#
-# Their absence is decided from the fact that they have
-# no entry attendance record.
-
-demo_duration = {
-    15: 45,
-    16: 30,
-    17: 30
-}
-
-
-# ============================================================
 # CHECK EXIT
 # ============================================================
 
@@ -254,7 +245,7 @@ def has_exit(record):
 
 
 # ============================================================
-# UPDATE EXISTING ATTENDANCE
+# UPDATE ATTENDANCE STATUS
 # ============================================================
 
 def update_attendance_status(record, status):
@@ -299,7 +290,7 @@ def update_attendance_status(record, status):
 
             json=update_data,
 
-            timeout=5
+            timeout=API_TIMEOUT
         )
 
 
@@ -326,7 +317,7 @@ def update_attendance_status(record, status):
 
 
 # ============================================================
-# CREATE ABSENT ATTENDANCE FOR MISSING STUDENT
+# CREATE ABSENT RECORD
 # ============================================================
 
 def create_absent_record(student_id, date):
@@ -353,7 +344,7 @@ def create_absent_record(student_id, date):
 
             json=absent_data,
 
-            timeout=5
+            timeout=API_TIMEOUT
         )
 
 
@@ -424,12 +415,13 @@ for student in students:
 
     # ========================================================
     # CASE 1:
-    # STUDENT NOT FOUND IN TODAY'S ATTENDANCE
+    # STUDENT NOT FOUND IN ATTENDANCE
     # ========================================================
 
     if student_id not in attendance_by_student:
 
         print()
+
         print(
             f"{name} -> NOT DETECTED IN ENTRY VIDEO"
         )
@@ -438,10 +430,6 @@ for student in students:
             f"{name} -> ABSENT"
         )
 
-
-        # ----------------------------------------------------
-        # CREATE ABSENT RECORD
-        # ----------------------------------------------------
 
         new_record = create_absent_record(
             student_id,
@@ -470,7 +458,7 @@ for student in students:
 
             "exit": "NO",
 
-            "duration": 0,
+            "duration": "N/A",
 
             "status": "ABSENT",
 
@@ -492,33 +480,24 @@ for student in students:
 
 
     # --------------------------------------------------------
-    # ENTRY
+    # CHECK ENTRY
     # --------------------------------------------------------
 
     entry_exists = (
         record.get("entryTime") is not None
+        and str(record.get("entryTime")).strip() != ""
     )
 
 
     # --------------------------------------------------------
-    # EXIT
+    # CHECK EXIT
     # --------------------------------------------------------
 
     exit_exists = has_exit(record)
 
 
-    # --------------------------------------------------------
-    # DEMO DURATION
-    # --------------------------------------------------------
-
-    duration = demo_duration.get(
-        student_id,
-        0
-    )
-
-
     # ========================================================
-    # FINAL ATTENDANCE DECISION
+    # DEMO ATTENDANCE DECISION
     # ========================================================
 
     if not entry_exists:
@@ -528,45 +507,42 @@ for student in students:
         reason = "No entry detected"
 
 
-    elif exit_exists:
+    elif not exit_exists:
 
-        if duration >= REQUIRED_DURATION:
+        # ====================================================
+        # STUDENT ENTERED BUT DID NOT EXIT
+        # ====================================================
+        #
+        # DEMO RULE:
+        # Student is still inside the classroom.
+        # Therefore mark PRESENT.
+        #
 
-            status = "PRESENT"
+        status = "PRESENT"
 
-            reason = "Required duration completed"
-
-        else:
-
-            status = "ABSENT"
-
-            reason = "Duration below 45 minutes"
+        reason = (
+            "Entry detected and no exit detected - "
+            "student is still inside"
+        )
 
 
     else:
 
-        # Student entered but did not appear
-        # in the exit video.
+        # ====================================================
+        # STUDENT ENTERED AND EXITED
+        # ====================================================
         #
-        # DEMO MODE:
-        # Treat student as still inside.
+        # DEMO RULE:
+        # Student has both entry and exit.
+        # For this demonstration, mark ABSENT.
+        #
 
-        if duration >= REQUIRED_DURATION:
+        status = "ABSENT"
 
-            status = "PRESENT"
-
-            reason = (
-                "45+ minutes verified "
-                "and still inside the classroom"
-            )
-
-        else:
-
-            status = "ABSENT"
-
-            reason = (
-                "Required duration not completed"
-            )
+        reason = (
+            "Entry and exit detected - "
+            "demo rule marks ABSENT"
+        )
 
 
     # ========================================================
@@ -605,7 +581,7 @@ for student in students:
             else "NO"
         ),
 
-        "duration": duration,
+        "duration": "N/A",
 
         "status": status,
 
@@ -640,17 +616,6 @@ print("-" * 75)
 
 for result in results:
 
-    if result["duration"] >= REQUIRED_DURATION:
-
-        duration_text = "45+ min"
-
-    else:
-
-        duration_text = (
-            f"{result['duration']} min"
-        )
-
-
     print(
 
         f"{result['name']:<18}"
@@ -659,7 +624,7 @@ for result in results:
 
         f"{result['exit']:<10}"
 
-        f"{duration_text:<15}"
+        f"{result['duration']:<15}"
 
         f"{result['status']}"
     )
@@ -698,7 +663,7 @@ for result in results:
 
     print(
         f"Duration   -> "
-        f"{result['duration']} minutes"
+        f"{result['duration']}"
     )
 
 
@@ -729,15 +694,21 @@ for result in results:
 # ============================================================
 
 present_count = sum(
+
     1
+
     for result in results
+
     if result["status"].upper() == "PRESENT"
 )
 
 
 absent_count = sum(
+
     1
+
     for result in results
+
     if result["status"].upper() == "ABSENT"
 )
 
@@ -770,27 +741,27 @@ print()
 
 
 # ============================================================
-# RULE
+# DEMO ATTENDANCE RULE
 # ============================================================
 
 print("========================================")
-print("ATTENDANCE RULE")
+print("DEMO ATTENDANCE RULE")
 print("========================================")
 print()
 
 
 print(
-    "Student not detected in entry -> ABSENT"
+    "Entry YES + Exit NO  -> PRESENT"
 )
 
 
 print(
-    "Duration >= 45 minutes -> PRESENT"
+    "Entry YES + Exit YES -> ABSENT"
 )
 
 
 print(
-    "Duration < 45 minutes -> ABSENT"
+    "Entry NO             -> ABSENT"
 )
 
 
@@ -803,21 +774,20 @@ print()
 
 print("NOTE:")
 
+
 print(
-    "Duration is currently DEMO MODE "
-    "because the uploaded videos are only 3:17."
+    "This project uses DEMO attendance logic."
 )
 
 
 print(
-    "The registered-student absence check "
-    "is NOT simulated."
+    "Actual 45-minute duration is NOT calculated."
 )
 
 
 print(
-    "A student who is not detected in the "
-    "entry video is automatically marked ABSENT."
+    "A student detected at entry but not at exit "
+    "is considered STILL INSIDE and marked PRESENT."
 )
 
 
