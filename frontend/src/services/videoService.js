@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const VIDEO_API_URL = "https://multimodal-smart-attendance-system-production.up.railway.app/api/videos";
+const VIDEO_API_URL =
+  "https://multimodal-smart-attendance-system-production.up.railway.app/api/videos";
 
 export const uploadVideos = async (entryVideo, exitVideo) => {
   const formData = new FormData();
@@ -14,4 +15,12 @@ export const uploadVideos = async (entryVideo, exitVideo) => {
   );
 
   return response;
+};
+
+export const getVideoProcessingStatus = async () => {
+  const response = await axios.get(
+    `${VIDEO_API_URL}/status`
+  );
+
+  return response.data;
 };

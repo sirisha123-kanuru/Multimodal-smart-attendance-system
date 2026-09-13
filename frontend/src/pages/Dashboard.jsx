@@ -13,7 +13,10 @@ import UploadCard from "../components/UploadCard";
 
 import { getStudents } from "../services/dashboardService";
 import { getAttendance } from "../services/attendanceService";
-import { uploadVideos } from "../services/videoService";
+import {
+  uploadVideos,
+  getVideoProcessingStatus
+} from "../services/videoService";
 
 import "./Dashboard.css";
 
@@ -501,76 +504,88 @@ function Dashboard() {
     // BOTH VIDEOS REQUIRED
     // ----------------------------------------------------------
 
-    if (
-      !entryVideo ||
-      !exitVideo
-    ) {
-
-      alert(
-        "Please upload both Entry and Exit videos."
-      );
-
+    if (!entryVideo || !exitVideo) {
+      alert("Please upload both Entry and Exit videos.");
       return;
-
     }
 
-
     try {
-
       setIsProcessing(true);
 
+      setStatus("Uploading Entry and Exit Videos...");
 
-      // --------------------------------------------------------
-      // PROCESSING START
-      // --------------------------------------------------------
-
-      setStatus(
-        "Uploading Entry and Exit Videos..."
+      const response = await uploadVideos(
+        entryVideo,
+        exitVideo
       );
 
-
-      // --------------------------------------------------------
-      // SEND VIDEOS TO SPRING BOOT
-      // --------------------------------------------------------
-
-      const response =
-        await uploadVideos(
-          entryVideo,
-          exitVideo
-        );
-
-
       console.log(
-        "Video Processing Response:",
+        "Video Upload Response:",
         response.data
       );
 
-
-      // --------------------------------------------------------
-      // LOAD NEW PROCESSED ATTENDANCE
-      // --------------------------------------------------------
-
       setStatus(
-        "AI Processing completed. Loading attendance..."
+        "Videos uploaded. AI processing started..."
       );
 
+      console.log(
+        "Waiting for background AI processing..."
+      );
+
+      let processingCompleted = false;
+      const maxAttempts = 120;
+
+      for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+
+        await new Promise(
+          (resolve) => setTimeout(resolve, 5000)
+        );
+
+        const processingStatus =
+          await getVideoProcessingStatus();
+
+        console.log(
+          `AI Processing Status (${attempt}/${maxAttempts}):`,
+          processingStatus
+        );
+
+        if (processingStatus.status === "COMPLETED") {
+          processingCompleted = true;
+
+          setStatus(
+            "AI processing completed. Loading attendance..."
+          );
+
+          break;
+        }
+
+        if (processingStatus.status === "FAILED") {
+          throw new Error(
+            processingStatus.error ||
+            "AI video processing failed."
+          );
+        }
+
+        setStatus(
+          `AI Processing... Please wait (${attempt}/${maxAttempts})`
+        );
+      }
+
+      if (!processingCompleted) {
+        throw new Error(
+          "AI processing is taking too long. Please check Railway logs."
+        );
+      }
 
       await loadProcessedAttendance();
-
-
-      // --------------------------------------------------------
-      // PROCESSING COMPLETE
-      // --------------------------------------------------------
 
       setStatus(
         "AI Attendance Processing Completed."
       );
 
-
       alert(
         "Entry and Exit videos processed successfully."
       );
-
 
     } catch (error) {
 
@@ -579,15 +594,9 @@ function Dashboard() {
         error
       );
 
-
       setStatus(
         "Video Processing Failed."
       );
-
-
-      // --------------------------------------------------------
-      // BACKEND RESPONSE ERROR
-      // --------------------------------------------------------
 
       if (error.response) {
 
@@ -596,51 +605,32 @@ function Dashboard() {
           error.response.data
         );
 
-
         alert(
-          typeof error.response.data ===
-          "string"
+          typeof error.response.data === "string"
             ? error.response.data
             : "Video processing failed. Please check the backend."
         );
 
-      }
-
-
-      // --------------------------------------------------------
-      // BACKEND CONNECTION ERROR
-      // --------------------------------------------------------
-
-      else if (error.request) {
+      } else if (error.request) {
 
         alert(
           "Cannot connect to Spring Boot backend. " +
-          "Make sure the backend is running on port 8081."
+          "Please check the Railway backend."
         );
 
-      }
-
-
-      // --------------------------------------------------------
-      // OTHER ERROR
-      // --------------------------------------------------------
-
-      else {
+      } else {
 
         alert(
+          error.message ||
           "Something went wrong while processing videos."
         );
-
       }
 
     } finally {
-
       setIsProcessing(false);
-
     }
 
   };
-
 
   // ============================================================
   // UI
@@ -922,5 +912,4 @@ function Dashboard() {
   );
 
 }
-
 export default Dashboard;
